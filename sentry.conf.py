@@ -78,6 +78,12 @@ SENTRY_USE_BIG_INTS = True
 # If you're expecting any kind of real traffic on Sentry, we highly recommend
 # configuring the CACHES and Redis settings
 
+#########################
+# CloudRunner Overrides #
+#########################
+SENTRY_FEATURES['auth:register'] = False
+SENTRY_ALLOW_ORIGIN = env('SENTRY_ALLOW_ORIGIN')
+
 ###########
 # General #
 ###########
