@@ -25,6 +25,7 @@ x-defaults: &defaults
     SENTRY_REDIS_HOST: redis
     SENTRY_POSTGRES_HOST: postgres
     SENTRY_EMAIL_HOST: smtp
+    SENTRY_EMAIL_PORT: 2525
   volumes:
     - sentry-data:/var/lib/sentry/files
 
@@ -33,6 +34,8 @@ services:
   smtp:
     restart: unless-stopped
     image: tianon/exim4
+    ports:
+      - '2525:25'
 
   memcached:
     restart: unless-stopped
@@ -61,6 +64,18 @@ services:
     <<: *defaults
     command: run worker
 
+  proxy:
+    restart: unless-stopped
+    image: nginx:1.15.2
+    ports:
+      - '80:80'
+    depends_on:
+      - web
+    volumes:
+      - ./nginx/nginx.conf.tpl:/etc/nginx/nginx.conf.tpl:ro
+    environment:
+      SRV_NAME: sentry.example.local
+    command: /bin/bash -c "envsubst '$$SRV_NAME' < /etc/nginx/nginx.conf.tpl > /etc/nginx/nginx.conf && cat /etc/nginx/nginx.conf && nginx -g 'daemon off;'"
 
 volumes:
     sentry-data:
