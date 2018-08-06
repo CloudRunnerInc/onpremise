@@ -10,7 +10,6 @@
 # mail.backend: 'smtp'  # Use dummy if you want to disable email entirely
 # mail.host: 'localhost'
 # mail.port: 25
-mail.port: 2525
 # mail.username: ''
 # mail.password: ''
 # mail.use-tls: false
