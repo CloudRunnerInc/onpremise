@@ -15,7 +15,6 @@ x-defaults: &defaults
     - redis
     - postgres
     - memcached
-    - smtp
 
   environment:
     # Run `docker-compose run web config generate-secret-key`
@@ -25,6 +24,11 @@ x-defaults: &defaults
     SENTRY_REDIS_HOST: redis
     SENTRY_POSTGRES_HOST: postgres
     SENTRY_EMAIL_HOST: smtp
+    SENTRY_EMAIL_HOST: smtp.mandrillapp.com
+    SENTRY_EMAIL_USER: CloudRunner LLC
+    SENTRY_EMAIL_PASSWORD: ${MANDRILL_API_KEY}
+    SENTRY_EMAIL_PORT: 587
+
   volumes:
     - sentry-data:/var/lib/sentry/files
 
