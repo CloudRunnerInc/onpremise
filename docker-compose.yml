@@ -77,9 +77,16 @@ services:
     expose:
       - '9000'
 
+  # sentry's internal celery cron service
   cron:
     <<: *defaults
     command: run cron
+
+  crontab:
+    image: willfarrell/crontab
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./crontab.config.json:/opt/crontab/config.json:rw
 
   worker:
     <<: *defaults

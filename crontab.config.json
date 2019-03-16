@@ -1,0 +1,4 @@
+[{
+    "schedule": "30 22 15-21 * *",
+	"command":"sh -c 'test $(date +%u) -eq 6 && docker exec sentry_worker_1 sentry cleanup'"
+}]
